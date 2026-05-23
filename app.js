@@ -1,13 +1,13 @@
 /* ===================================================
-   GreenField Turf Booking — Frontend JS
+   JK Turf Booking — Frontend JS
    Backend: MySQL via REST API (see backend.js / schema.sql)
    Payment: UPI deeplink / Paytm / PhonePe
    =================================================== */
 
 // ── CONFIG ──────────────────────────────────────────
 const API_BASE = 'http://localhost:3000/api'; // Change to your backend URL
-const UPI_ID   = 'greenfield@upi';             // Change to your UPI ID
-const MERCHANT_NAME = 'GreenField Turf';
+const UPI_ID   = '9788599717@upi';             // Change to your UPI ID
+const MERCHANT_NAME = 'JK Turf';
 
 // ── TURF DATA ────────────────────────────────────────
 const TURFS = [
@@ -255,7 +255,7 @@ function initiatePayment(method) {
   document.querySelector(`[data-method="${method}"]`).classList.add('active');
 
   const total = selectedTurf.price + 20;
-  const note  = encodeURIComponent(`GreenField ${selectedTurf.name} ${selectedDate} ${selectedSlot.start}`);
+  const note  = encodeURIComponent(`JK ${selectedTurf.name} ${selectedDate} ${selectedSlot.start}`);
 
   // Build deeplinks
   if (method === 'upi') {
