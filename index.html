@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GreenField — Turf Booking</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="navbar">
+    <div class="nav-brand">
+      <span class="brand-icon">⚽</span>
+      <span class="brand-name">GreenField</span>
+    </div>
+    <div class="nav-links">
+      <a href="#turfs">Turfs</a>
+      <a href="#book">Book</a>
+      <a href="#" id="myBookingsBtn">My Bookings</a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-bg">
+      <div class="field-lines"></div>
+    </div>
+    <div class="hero-content">
+      <p class="hero-tag">Chennai's Finest</p>
+      <h1 class="hero-title">BOOK YOUR<br><span class="hero-accent">TURF</span></h1>
+      <p class="hero-sub">Premium 5-a-side & 7-a-side football turfs.<br>Instant booking. No hassle.</p>
+      <a href="#book" class="cta-btn">Reserve a Slot →</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat"><span class="stat-num">4</span><span class="stat-label">Turfs</span></div>
+      <div class="stat"><span class="stat-num">24/7</span><span class="stat-label">Booking</span></div>
+      <div class="stat"><span class="stat-num">500+</span><span class="stat-label">Games/mo</span></div>
+    </div>
+  </section>
+
+  <!-- TURF SELECTION -->
+  <section class="section" id="turfs">
+    <div class="container">
+      <div class="section-header">
+        <p class="section-tag">Choose Your Arena</p>
+        <h2 class="section-title">SELECT TURF</h2>
+      </div>
+      <div class="turf-grid" id="turfGrid">
+        <!-- filled by JS -->
+      </div>
+    </div>
+  </section>
+
+  <!-- BOOKING SECTION -->
+  <section class="section booking-section" id="book">
+    <div class="container">
+      <div class="section-header">
+        <p class="section-tag">Pick Your Game Time</p>
+        <h2 class="section-title">BOOK A SLOT</h2>
+      </div>
+
+      <div class="booking-layout">
+        <!-- Calendar -->
+        <div class="calendar-panel">
+          <div class="calendar-header">
+            <button class="cal-nav" id="prevMonth">‹</button>
+            <span class="cal-month-label" id="calMonthLabel"></span>
+            <button class="cal-nav" id="nextMonth">›</button>
+          </div>
+          <div class="cal-weekdays">
+            <span>Su</span><span>Mo</span><span>Tu</span><span>We</span>
+            <span>Th</span><span>Fr</span><span>Sa</span>
+          </div>
+          <div class="cal-days" id="calDays"></div>
+          <div class="cal-legend">
+            <span class="leg-dot avail"></span><span>Available</span>
+            <span class="leg-dot partial"></span><span>Partial</span>
+            <span class="leg-dot full"></span><span>Full</span>
+          </div>
+        </div>
+
+        <!-- Slots Panel -->
+        <div class="slots-panel">
+          <div class="slots-header">
+            <h3 id="slotsDateLabel">Select a date to see slots</h3>
+            <div class="turf-badge" id="slotTurfBadge"></div>
+          </div>
+          <div class="slots-grid" id="slotsGrid">
+            <div class="slots-placeholder">
+              <span class="placeholder-icon">📅</span>
+              <p>Pick a date from the calendar</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BOOKING MODAL -->
+  <div class="modal-overlay" id="bookingModal">
+    <div class="modal">
+      <button class="modal-close" id="modalClose">✕</button>
+      <div class="modal-header">
+        <h2 class="modal-title">CONFIRM BOOKING</h2>
+        <p class="modal-sub">Review your slot details below</p>
+      </div>
+
+      <div class="booking-summary" id="bookingSummary">
+        <!-- filled by JS -->
+      </div>
+
+      <div class="modal-form">
+        <div class="form-group">
+          <label>Your Name</label>
+          <input type="text" id="userName" placeholder="e.g. Karthik Rajan">
+        </div>
+        <div class="form-group">
+          <label>Phone Number</label>
+          <input type="tel" id="userPhone" placeholder="+91 98765 43210">
+        </div>
+        <div class="form-group">
+          <label>Team Name <span class="optional">(optional)</span></label>
+          <input type="text" id="teamName" placeholder="e.g. FC Madras">
+        </div>
+      </div>
+
+      <div class="payment-section">
+        <div class="price-row">
+          <span>Slot Price</span>
+          <span class="price-val" id="slotPrice">₹0</span>
+        </div>
+        <div class="price-row">
+          <span>Platform Fee</span>
+          <span class="price-val">₹20</span>
+        </div>
+        <div class="price-row total">
+          <span>Total</span>
+          <span class="price-val" id="totalPrice">₹0</span>
+        </div>
+
+        <div class="payment-methods">
+          <p class="pay-label">Pay Via</p>
+          <div class="pay-btns">
+            <button class="pay-btn" data-method="upi" onclick="initiatePayment('upi')">
+              <span>💳</span> UPI / GPay
+            </button>
+            <button class="pay-btn" data-method="paytm" onclick="initiatePayment('paytm')">
+              <span>📱</span> Paytm
+            </button>
+            <button class="pay-btn" data-method="phonepe" onclick="initiatePayment('phonepe')">
+              <span>🟣</span> PhonePe
+            </button>
+          </div>
+        </div>
+
+        <button class="confirm-btn" id="confirmBookBtn" onclick="confirmBooking()">
+          ⚡ Pay & Confirm Booking
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- SUCCESS MODAL -->
+  <div class="modal-overlay" id="successModal">
+    <div class="modal success-modal">
+      <div class="success-icon">✅</div>
+      <h2 class="modal-title">BOOKED!</h2>
+      <p class="modal-sub">Your turf is reserved. See you on the field!</p>
+      <div class="booking-id-box">
+        <span>Booking ID</span>
+        <strong id="bookingIdDisplay">GF-000000</strong>
+      </div>
+      <p class="success-note">A confirmation will be sent to your phone.</p>
+      <button class="confirm-btn" onclick="closeSuccess()">Done 🎉</button>
+    </div>
+  </div>
+
+  <!-- MY BOOKINGS PANEL -->
+  <div class="side-panel" id="myBookingsPanel">
+    <div class="side-panel-header">
+      <h3>MY BOOKINGS</h3>
+      <button onclick="closeMyBookings()">✕</button>
+    </div>
+    <div class="side-panel-body" id="myBookingsList">
+      <p class="empty-msg">No bookings yet. Get out there!</p>
+    </div>
+  </div>
+
+  <div class="backdrop" id="backdrop" onclick="closeMyBookings()"></div>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-inner">
+        <span class="brand-name">⚽ GreenField</span>
+        <span class="footer-note">Chennai · India · Play More</span>
+        <span class="footer-note">© 2026</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
